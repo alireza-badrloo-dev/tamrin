@@ -17,13 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NameViewHolder extends RecyclerView.ViewHolder {
     private ImageView image_item;
     private TextView name_item;
-    private TextView date_item;
+
 
     public NameViewHolder(@NonNull View itemView) {
         super(itemView);
         image_item = itemView.findViewById(R.id.image_item);
         name_item = itemView.findViewById(R.id.name_item);
-        date_item = itemView.findViewById(R.id.date_item);
+
     }
 
     public void setItems(String name , int imageId){
@@ -31,17 +31,6 @@ public class NameViewHolder extends RecyclerView.ViewHolder {
         image_item.setImageResource(imageId);
 
 
-        date_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog DatePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        Toast.makeText(v.getContext(),"year: " + year + " month: " + month + " day: " + dayOfMonth , Toast.LENGTH_SHORT).show();
-                    }
-                },1999,01,16);
-                DatePickerDialog.show();
-            }
-        });
+
     }
 }

@@ -1,6 +1,8 @@
 package com.example.myapplication6;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -25,5 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapterName);
+
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("this is a simple app");
+        progressDialog.setTitle("Welcome");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+            }
+        },3000);
     }
 }
