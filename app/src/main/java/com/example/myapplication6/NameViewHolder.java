@@ -1,9 +1,11 @@
 package com.example.myapplication6;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -15,13 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NameViewHolder extends RecyclerView.ViewHolder {
     private ImageView image_item;
     private TextView name_item;
-    private TextView time_item;
+    private TextView date_item;
 
     public NameViewHolder(@NonNull View itemView) {
         super(itemView);
         image_item = itemView.findViewById(R.id.image_item);
         name_item = itemView.findViewById(R.id.name_item);
-        time_item = itemView.findViewById(R.id.time_item);
+        date_item = itemView.findViewById(R.id.date_item);
     }
 
     public void setItems(String name , int imageId){
@@ -29,16 +31,16 @@ public class NameViewHolder extends RecyclerView.ViewHolder {
         image_item.setImageResource(imageId);
 
 
-        time_item.setOnClickListener(new View.OnClickListener() {
+        date_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(v.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                DatePickerDialog DatePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        Toast.makeText(v.getContext(),"year: " + year + " month: " + month + " day: " + dayOfMonth , Toast.LENGTH_SHORT).show();
                     }
-                },23 , 01 ,true);
-                timePickerDialog.show();
+                },1999,01,16);
+                DatePickerDialog.show();
             }
         });
     }
