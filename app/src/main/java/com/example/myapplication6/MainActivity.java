@@ -1,58 +1,80 @@
 package com.example.myapplication6;
 
-import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
+import android.media.MediaPlayer;
+
+import android.os.Bundle;
+
+import android.os.Handler;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 public class MainActivity extends AppCompatActivity {
+    Handler handler;
+    Runnable runnable;
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults, int deviceId) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId);
-        if (requestCode == 100){
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-
-            }else {
-                Toast.makeText(this,"permission is not granted", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
+    Boolean isplaying = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.musicplayer);
 
-       
+        MediaPlayer mediaPlayer = MediaPlayer.create(this,R.raw.music);
+        SeekBar prg = findViewById(R.id.seekbar);
+        prg.setMax(mediaPlayer.getDuration());
 
-        String permission;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-            permission = Manifest.permission.READ_MEDIA_AUDIO;
-        }else {
-            permission = Manifest.permission.READ_EXTERNAL_STORAGE;
-        }
+        prg.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser){
+                    mediaPlayer.seekTo(progress);
 
-        if (ContextCompat.checkSelfPermission(this,permission) == PackageManager.PERMISSION_GRANTED){
+                }
+            }
 
-        }else {
-            ActivityCompat.requestPermissions(this,new String[]{permission},100);
-        }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        handler = new Handler();
+        runnable = new Runnable() {
+             @Override
+             public void run() {
+                 prg.setProgress(mediaPlayer.getCurrentPosition());
+                 handler.postDelayed(runnable,1000);
+             }
+         };
+
+
+        ImageView btn_item = findViewById(R.id.btn_item);
+        btn_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isplaying == false){
+                    mediaPlayer.start();
+                    isplaying=true;
+                    btn_item.setImageResource(R.drawable.pause);
+                    handler.post(runnable);
+                }else {
+                    mediaPlayer.pause();
+                    isplaying=false;
+                    btn_item.setImageResource(R.drawable.play);
+                }
+
+            }
+        });
+
+
 
 
     }
