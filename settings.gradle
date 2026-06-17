@@ -1,6 +1,6 @@
 pluginManagement {
     repositories {
-        repositories {
+
             maven {
                 url = uri("https://mirror-maven.runflare.com/android/maven2/")
             }
@@ -10,7 +10,7 @@ pluginManagement {
             maven {
                 url = uri("https://mirror-maven.runflare.com/gradle-plugins/")
             }
-        }
+
         google {
             content {
                 includeGroupByRegex("com\\.android.*")
@@ -25,7 +25,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        repositories {
+
             maven {
                 url = uri("https://mirror-maven.runflare.com/android/maven2/")
             }
@@ -35,7 +35,6 @@ dependencyResolutionManagement {
             maven {
                 url = uri("https://mirror-maven.runflare.com/gradle-plugins/")
             }
-        }
         google()
         mavenCentral()
     }
